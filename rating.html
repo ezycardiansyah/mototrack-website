@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rating & Review - MotoTrack</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ============================================================
+           RATING PAGE
+        ============================================================ */
+        .rating-page {
+            padding: 120px 0 60px;
+            min-height: 100vh;
+            background: var(--dark-bg);
+        }
+
+        .rating-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ===== HEADER ===== */
+        .rating-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .rating-header h1 {
+            font-size: 40px;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .rating-header h1 .highlight {
+            color: var(--gold);
+        }
+
+        .rating-header p {
+            color: var(--gray);
+            font-size: 16px;
+        }
+
+        /* ===== AVERAGE RATING ===== */
+        .rating-average {
+            background: var(--black-light);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid rgba(201, 168, 76, 0.05);
+            margin-bottom: 30px;
+        }
+
+        .rating-average .big-star {
+            font-size: 48px;
+            line-height: 1;
+        }
+
+        .rating-average .big-number {
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--gold);
+        }
+
+        .rating-average .big-total {
+            font-size: 20px;
+            color: var(--gray);
+        }
+
+        .rating-average .rating-bar-container {
+            margin-top: 16px;
+        }
+
+        .rating-bar-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 6px;
+        }
+
+        .rating-bar-row .star-label {
+            width: 40px;
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        .rating-bar-row .bar-track {
+            flex: 1;
+            height: 6px;
+            background: var(--black);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .rating-bar-row .bar-fill {
+            height: 100%;
+            background: var(--gold);
+            border-radius: 4px;
+            transition: width 0.8s ease;
+        }
+
+        .rating-bar-row .bar-count {
+            width: 30px;
+            font-size: 12px;
+            color: var(--gray);
+            text-align: right;
+        }
+
+        /* ===== REVIEW LIST ===== */
+        .review-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        .review-card {
+            background: var(--black-light);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: 0.3s;
+        }
+
+        .review-card:hover {
+            border-color: rgba(201, 168, 76, 0.15);
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .review-name {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .review-stars {
+            color: var(--gold);
+            font-size: 16px;
+            letter-spacing: 2px;
+        }
+
+        .review-date {
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        .review-text {
+            color: var(--gray);
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        /* ===== REVIEW FORM ===== */
+        .review-form {
+            background: var(--black-light);
+            border-radius: 16px;
+            padding: 30px;
+            border: 1px solid rgba(201, 168, 76, 0.05);
+        }
+
+        .review-form h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .star-rating {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .star-rating .star {
+            font-size: 32px;
+            cursor: pointer;
+            color: var(--gray);
+            transition: all 0.2s;
+            user-select: none;
+        }
+
+        .star-rating .star.active {
+            color: var(--gold);
+        }
+
+        .star-rating .star:hover {
+            transform: scale(1.2);
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 500;
+            font-size: 14px;
+            margin-bottom: 4px;
+            color: var(--white);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--dark-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: var(--white);
+            font-family: 'Inter', sans-serif;
+            transition: 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background: var(--gold);
+            color: var(--black);
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-submit:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* ===== SUCCESS MESSAGE ===== */
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            background: rgba(46, 204, 113, 0.1);
+            border: 1px solid rgba(46, 204, 113, 0.3);
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+
+        .success-message .check {
+            font-size: 48px;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .success-message h4 {
+            font-size: 20px;
+            color: #2ECC71;
+        }
+
+        .success-message p {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        /* ============================================================
+           RESPONSIVE
+        ============================================================ */
+        @media (max-width: 768px) {
+            .rating-page {
+                padding: 100px 0 40px;
+            }
+
+            .rating-header h1 {
+                font-size: 28px;
+            }
+
+            .rating-average .big-number {
+                font-size: 32px;
+            }
+
+            .star-rating .star {
+                font-size: 28px;
+            }
+
+            .review-header {
+                flex-wrap: wrap;
+                gap: 4px;
+            }
+
+            .rating-bar-row .star-label {
+                width: 30px;
+                font-size: 12px;
+            }
+
+            .rating-bar-row .bar-count {
+                width: 20px;
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== NAVBAR ===== -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <span class="logo-icon">🏍️</span>
+                <span class="logo-text">MotoTrack</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#features">Fitur</a></li>
+                <li><a href="index.html#faq">FAQ</a></li>
+                <li><a href="index.html#feedback">Feedback</a></li>
+                <li><a href="rating.html" class="active">⭐ Rating</a></li>
+            </ul>
+            <a href="index.html#download" class="btn-download-nav">Download</a>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== RATING PAGE ===== -->
+    <section class="rating-page">
+        <div class="rating-container">
+
+            <!-- ===== HEADER ===== -->
+            <div class="rating-header">
+                <h1>⭐ Rating & <span class="highlight">Review</span></h1>
+                <p>Bagikan pengalamanmu menggunakan MotoTrack. Penilaianmu sangat berarti!</p>
+            </div>
+
+            <!-- ===== AVERAGE RATING ===== -->
+            <div class="rating-average" id="ratingSummary">
+                <div class="big-star">⭐</div>
+                <div>
+                    <span class="big-number" id="avgRating">4.8</span>
+                    <span class="big-total">/ 5.0</span>
+                </div>
+                <div style="color: var(--gray); font-size: 14px; margin-top: 4px;">
+                    Berdasarkan <span id="totalReviews">3</span> penilaian
+                </div>
+                <div class="rating-bar-container">
+                    <div class="rating-bar-row">
+                        <span class="star-label">5 ⭐</span>
+                        <div class="bar-track"><div class="bar-fill" style="width: 80%;" id="bar5"></div></div>
+                        <span class="bar-count" id="count5">2</span>
+                    </div>
+                    <div class="rating-bar-row">
+                        <span class="star-label">4 ⭐</span>
+                        <div class="bar-track"><div class="bar-fill" style="width: 20%;" id="bar4"></div></div>
+                        <span class="bar-count" id="count4">1</span>
+                    </div>
+                    <div class="rating-bar-row">
+                        <span class="star-label">3 ⭐</span>
+                        <div class="bar-track"><div class="bar-fill" style="width: 0%;" id="bar3"></div></div>
+                        <span class="bar-count" id="count3">0</span>
+                    </div>
+                    <div class="rating-bar-row">
+                        <span class="star-label">2 ⭐</span>
+                        <div class="bar-track"><div class="bar-fill" style="width: 0%;" id="bar2"></div></div>
+                        <span class="bar-count" id="count2">0</span>
+                    </div>
+                    <div class="rating-bar-row">
+                        <span class="star-label">1 ⭐</span>
+                        <div class="bar-track"><div class="bar-fill" style="width: 0%;" id="bar1"></div></div>
+                        <span class="bar-count" id="count1">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== REVIEW LIST ===== -->
+            <div class="review-list" id="reviewList">
+                <div class="review-card">
+                    <div class="review-header">
+                        <span class="review-name">Andi Saputra(CONTOH!)</span>
+                        <span class="review-stars">⭐⭐⭐⭐⭐</span>
+                    </div>
+                    <div class="review-date">2 hari yang lalu</div>
+                    <div class="review-text">Aplikasi sangat membantu untuk perjalanan touring! Navigasi akurat dan fitur trackingnya mantap.</div>
+                </div>
+                <div class="review-card">
+                    <div class="review-header">
+                        <span class="review-name">Budi Raharjo(CONTOH!)</span>
+                        <span class="review-stars">⭐⭐⭐⭐</span>
+                    </div>
+                    <div class="review-date">1 minggu yang lalu</div>
+                    <div class="review-text">Bagus untuk tracking perjalanan. Info cuaca membantu banget. Tinggal ditambah fitur share rute aja.</div>
+                </div>
+                <div class="review-card">
+                    <div class="review-header">
+                        <span class="review-name">Cici Aulia (CONTOH!)</span>
+                        <span class="review-stars">⭐⭐⭐⭐⭐</span>
+                    </div>
+                    <div class="review-date">2 minggu yang lalu</div>
+                    <div class="review-text">Sering pakai untuk touring bareng teman. Fitur export GPX sangat membantu!</div>
+                </div>
+            </div>
+
+            <!-- ===== REVIEW FORM ===== -->
+            <div class="review-form">
+                <h3>✍️ Tulis Penilaian</h3>
+                <div class="star-rating" id="starRating">
+                    <span class="star" data-value="1">☆</span>
+                    <span class="star" data-value="2">☆</span>
+                    <span class="star" data-value="3">☆</span>
+                    <span class="star" data-value="4">☆</span>
+                    <span class="star" data-value="5">☆</span>
+                </div>
+                <form id="reviewForm">
+                    <div class="form-group">
+                        <label for="reviewName">Nama</label>
+                        <input type="text" id="reviewName" placeholder="Masukkan nama Anda" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reviewComment">Komentar</label>
+                        <textarea id="reviewComment" placeholder="Ceritakan pengalamanmu menggunakan MotoTrack..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit" id="submitReview">⭐ Kirim Penilaian</button>
+                </form>
+                <div class="success-message" id="successMessage">
+                    <span class="check">✅</span>
+                    <h4>Terima Kasih!</h4>
+                    <p>Penilaianmu telah berhasil dikirim dan akan membantu pengembangan MotoTrack.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="logo-icon">🏍️</span>
+                    <span class="logo-text">MotoTrack</span>
+                    <p>Lacak perjalananmu dengan lebih cerdas.</p>
+                </div>
+                <div class="footer-links">
+                    <a href="index.html">Home</a>
+                    <a href="index.html#features">Fitur</a>
+                    <a href="index.html#faq">FAQ</a>
+                    <a href="rating.html">⭐ Rating</a>
+                </div>
+                <div class="footer-social">
+                    <a href="#" aria-label="Instagram">📸</a>
+                    <a href="#" aria-label="Twitter">🐦</a>
+                    <a href="#" aria-label="GitHub">🐙</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 MotoTrack. Made with ❤️ by KyokoRu</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ============================================================
+        // STAR RATING
+        // ============================================================
+        let selectedRating = 0;
+        const stars = document.querySelectorAll('.star-rating .star');
+
+        stars.forEach(star => {
+            star.addEventListener('click', function() {
+                selectedRating = parseInt(this.dataset.value);
+                updateStars(selectedRating);
+            });
+
+            star.addEventListener('mouseenter', function() {
+                const val = parseInt(this.dataset.value);
+                updateStars(val);
+            });
+
+            star.addEventListener('mouseleave', function() {
+                updateStars(selectedRating);
+            });
+        });
+
+        function updateStars(rating) {
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.textContent = '⭐';
+                    star.classList.add('active');
+                } else {
+                    star.textContent = '☆';
+                    star.classList.remove('active');
+                }
+            });
+        }
+
+        // ============================================================
+        // FORM SUBMIT
+        // ============================================================
+        document.getElementById('reviewForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('reviewName').value.trim();
+            const comment = document.getElementById('reviewComment').value.trim();
+
+            if (selectedRating === 0) {
+                alert('Silakan pilih rating bintang terlebih dahulu!');
+                return;
+            }
+
+            if (!name || !comment) {
+                alert('Harap isi semua field!');
+                return;
+            }
+
+            // Simpan data (nanti bisa dikirim ke server)
+            console.log('Review:', { rating: selectedRating, name, comment });
+
+            // Tampilkan sukses
+            this.style.display = 'none';
+            document.getElementById('successMessage').style.display = 'block';
+
+            // Tambahkan review ke list
+            const reviewList = document.getElementById('reviewList');
+            const newReview = document.createElement('div');
+            newReview.className = 'review-card';
+            newReview.innerHTML = `
+                <div class="review-header">
+                    <span class="review-name">${name}</span>
+                    <span class="review-stars">${'⭐'.repeat(selectedRating)}</span>
+                </div>
+                <div class="review-date">Baru saja</div>
+                <div class="review-text">${comment}</div>
+            `;
+            reviewList.prepend(newReview);
+
+            // Update rating stats
+            updateRatingStats(selectedRating);
+        });
+
+        // ============================================================
+        // UPDATE RATING STATS
+        // ============================================================
+        function updateRatingStats(newRating) {
+            const totalEl = document.getElementById('totalReviews');
+            const avgEl = document.getElementById('avgRating');
+            const counts = {
+                1: parseInt(document.getElementById('count1').textContent),
+                2: parseInt(document.getElementById('count2').textContent),
+                3: parseInt(document.getElementById('count3').textContent),
+                4: parseInt(document.getElementById('count4').textContent),
+                5: parseInt(document.getElementById('count5').textContent)
+            };
+
+            // Tambah rating baru
+            counts[newRating] = (counts[newRating] || 0) + 1;
+
+            // Hitung total
+            const total = Object.values(counts).reduce((a, b) => a + b, 0);
+            const sum = Object.entries(counts).reduce((acc, [key, val]) => acc + (parseInt(key) * val), 0);
+            const avg = total > 0 ? (sum / total) : 0;
+
+            // Update UI
+            totalEl.textContent = total;
+            avgEl.textContent = avg.toFixed(1);
+
+            // Update bars
+            for (let i = 1; i <= 5; i++) {
+                document.getElementById(`count${i}`).textContent = counts[i];
+                const percentage = total > 0 ? (counts[i] / total) * 100 : 0;
+                document.getElementById(`bar${i}`).style.width = percentage + '%';
+            }
+        }
+
+        // ============================================================
+        // NAVBAR HAMBURGER
+        // ============================================================
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // ============================================================
+        // SMOOTH SCROLL
+        // ============================================================
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                    navMenu.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
