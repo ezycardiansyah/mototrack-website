@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halaman Tidak Ditemukan - MotoTrack</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .error-page {
+            padding: 150px 20px;
+            text-align: center;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--dark-bg);
+        }
+        .error-content .icon {
+            font-size: 80px;
+            animation: float 3s ease-in-out infinite;
+        }
+        .error-content h1 {
+            font-size: 48px;
+            margin: 20px 0;
+            color: var(--gold);
+        }
+        .error-content p {
+            color: var(--gray);
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+        .error-content .btn-primary {
+            display: inline-block;
+        }
+        @media (max-width: 768px) {
+            .error-content h1 { font-size: 32px; }
+            .error-content .icon { font-size: 60px; }
+        }
+    </style>
+</head>
+<body>
+    <section class="error-page">
+        <div class="error-content">
+            <div class="icon">🧭</div>
+            <h1>404</h1>
+            <p>Halaman yang kamu cari tidak ditemukan.</p>
+            <a href="index.html" class="btn-primary">🏠 Kembali ke Beranda</a>
+        </div>
+    </section>
+</body>
+</html>

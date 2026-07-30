@@ -16,6 +16,7 @@
     --white: #F5F0EB;
     --gray: #A89888;
     --dark-bg: #08080F;
+    --transition: all 0.3s ease;
 }
 
 html {
@@ -28,12 +29,62 @@ body {
     color: var(--white);
     line-height: 1.6;
     overflow-x: hidden;
+    transition: var(--transition);
 }
 
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
+}
+
+/* ============================================================
+   LOADING SCREEN
+============================================================ */
+#loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--dark-bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease;
+}
+
+#loading.hide {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 3px solid var(--black-light);
+    border-top-color: var(--gold);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+.loading-text {
+    margin-top: 16px;
+    color: var(--gray);
+    font-size: 14px;
+    letter-spacing: 2px;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
 }
 
 /* ============================================================
@@ -48,6 +99,7 @@ body {
     border-bottom: 1px solid rgba(201, 168, 76, 0.1);
     z-index: 1000;
     padding: 12px 0;
+    transition: var(--transition);
 }
 
 .navbar .container {
@@ -63,6 +115,7 @@ body {
     font-size: 24px;
     font-weight: 800;
     color: var(--gold);
+    text-decoration: none;
 }
 
 .logo-icon {
@@ -81,10 +134,32 @@ body {
     text-decoration: none;
     font-size: 14px;
     font-weight: 500;
-    transition: color 0.3s;
+    transition: var(--transition);
+    padding: 4px 0;
+    position: relative;
+}
+
+.nav-menu a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--gold);
+    transition: var(--transition);
+}
+
+.nav-menu a:hover::after,
+.nav-menu a.active::after {
+    width: 100%;
 }
 
 .nav-menu a:hover {
+    color: var(--gold);
+}
+
+.nav-menu a.active {
     color: var(--gold);
 }
 
@@ -96,7 +171,7 @@ body {
     text-decoration: none;
     font-weight: 600;
     font-size: 14px;
-    transition: all 0.3s;
+    transition: var(--transition);
 }
 
 .btn-download-nav:hover {
@@ -115,7 +190,17 @@ body {
     width: 25px;
     height: 2px;
     background: var(--white);
-    transition: 0.3s;
+    transition: var(--transition);
+}
+
+.hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+}
+.hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
 }
 
 /* ============================================================
@@ -174,6 +259,7 @@ body {
     display: flex;
     gap: 16px;
     margin-bottom: 40px;
+    flex-wrap: wrap;
 }
 
 .btn-primary {
@@ -187,7 +273,7 @@ body {
     font-weight: 600;
     font-size: 16px;
     text-decoration: none;
-    transition: all 0.3s;
+    transition: var(--transition);
     border: none;
     cursor: pointer;
 }
@@ -210,7 +296,7 @@ body {
     font-size: 16px;
     text-decoration: none;
     border: 2px solid rgba(255, 255, 255, 0.2);
-    transition: all 0.3s;
+    transition: var(--transition);
 }
 
 .btn-secondary:hover {
@@ -255,6 +341,12 @@ body {
     border: 2px solid rgba(201, 168, 76, 0.2);
     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
     position: relative;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
 }
 
 .phone-screen {
@@ -272,66 +364,26 @@ body {
     object-fit: cover;
 }
 
-.phone-content {
+.phone-overlay {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    bottom: 0;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    background: rgba(8, 8, 15, 0.9);
-}
-
-.mockup-header {
+    padding: 16px 20px;
     display: flex;
     justify-content: space-between;
     font-size: 12px;
-    color: var(--gray);
-    margin-bottom: 20px;
+    color: var(--white);
+    background: linear-gradient(to bottom, rgba(0,0,0,0.4), transparent);
+    border-radius: 30px 30px 0 0;
 }
 
-.mockup-map {
-    flex: 1;
-    background: rgba(26, 26, 46, 0.8);
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    margin-bottom: 12px;
+.phone-overlay .overlay-time {
+    font-weight: 600;
 }
 
-.mockup-stats {
-    display: flex;
-    justify-content: space-around;
-    background: rgba(26, 26, 46, 0.8);
-    border-radius: 12px;
-    padding: 12px;
+.phone-overlay .overlay-weather {
     font-size: 12px;
-    margin-bottom: 12px;
-}
-
-.mockup-nav {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    background: rgba(26, 26, 46, 0.8);
-    border-radius: 12px;
-    padding: 12px;
-}
-
-.mockup-nav span {
-    font-size: 24px;
-    cursor: pointer;
-    padding: 4px 12px;
-    border-radius: 8px;
-    transition: 0.3s;
-}
-
-.mockup-nav span:hover {
-    background: rgba(201, 168, 76, 0.2);
 }
 
 .floating-badge {
@@ -343,6 +395,7 @@ body {
     border: 1px solid rgba(201, 168, 76, 0.2);
     font-size: 14px;
     font-weight: 500;
+    animation: float 3s ease-in-out infinite 1s;
 }
 
 .badge-weather {
@@ -353,6 +406,31 @@ body {
 .badge-route {
     bottom: 100px;
     left: -30px;
+    animation-delay: 1.5s;
+}
+
+.hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.hero-tag {
+    display: inline-block;
+    background: rgba(201, 168, 76, 0.1);
+    color: var(--gold);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    border: 1px solid rgba(201, 168, 76, 0.15);
+    transition: var(--transition);
+}
+
+.hero-tag:hover {
+    background: rgba(201, 168, 76, 0.2);
+    transform: translateY(-2px);
 }
 
 /* ============================================================
@@ -407,7 +485,7 @@ body {
     padding: 30px;
     border-radius: 16px;
     border: 1px solid rgba(201, 168, 76, 0.05);
-    transition: all 0.3s;
+    transition: var(--transition);
     text-align: center;
 }
 
@@ -433,7 +511,7 @@ body {
 }
 
 /* ============================================================
-   SCREENSHOTS (UPDATE)
+   SCREENSHOTS
 ============================================================ */
 .screenshots {
     padding: 80px 0;
@@ -451,7 +529,7 @@ body {
     border-radius: 16px;
     overflow: hidden;
     border: 1px solid rgba(201, 168, 76, 0.05);
-    transition: all 0.3s;
+    transition: var(--transition);
 }
 
 .screenshot-card:hover {
@@ -493,77 +571,199 @@ body {
 }
 
 /* ============================================================
-   RESPONSIVE - SCREENSHOTS
+   DOWNLOAD CARDS
 ============================================================ */
-@media (max-width: 992px) {
-    .screenshot-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
+.download {
+    padding: 80px 0;
+    background: var(--black);
+    text-align: center;
 }
 
-@media (max-width: 576px) {
-    .screenshot-grid {
-        grid-template-columns: 1fr;
-    }
+.download-content h2 {
+    font-size: 36px;
+    margin-bottom: 12px;
 }
 
-/* ===== PHONE OVERLAY ===== */
-.phone-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    padding: 16px 20px;
+.download-content p {
+    color: var(--gray);
+    margin-bottom: 30px;
+}
+
+.download-card {
+    background: var(--black-light);
+    border-radius: 16px;
+    padding: 30px;
+    margin-bottom: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: var(--transition);
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+}
+
+.download-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(201, 168, 76, 0.2);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.download-card.latest {
+    border-color: rgba(201, 168, 76, 0.3);
+    background: linear-gradient(135deg, var(--black-light) 0%, rgba(201, 168, 76, 0.05) 100%);
+}
+
+.download-badge {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--black);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+}
+
+.download-badge.stable-badge {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--gray);
+}
+
+.version-badge-new {
+    background: #2ECC71;
+    color: var(--black);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-left: 8px;
+}
+
+.download-info {
     display: flex;
     justify-content: space-between;
-    font-size: 12px;
-    color: var(--white);
-    background: linear-gradient(to bottom, rgba(0,0,0,0.4), transparent);
-    border-radius: 30px 30px 0 0;
-}
-
-.phone-overlay .overlay-time {
-    font-weight: 600;
-}
-
-.phone-overlay .overlay-weather {
-    font-size: 12px;
-}
-
-/* ============================================================
-   HERO TAGS
-============================================================ */
-.hero-tags {
-    display: flex;
+    align-items: center;
     flex-wrap: wrap;
+    margin-bottom: 16px;
+}
+
+.download-version {
+    display: flex;
+    align-items: center;
     gap: 10px;
-    margin-top: 20px;
+    flex-wrap: wrap;
 }
 
-.hero-tag {
-    display: inline-block;
-    background: rgba(201, 168, 76, 0.1);
-    color: var(--gold);
-    padding: 6px 16px;
-    border-radius: 20px;
+.version-icon {
+    font-size: 28px;
+}
+
+.version-name {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--white);
+}
+
+.version-date {
     font-size: 14px;
-    font-weight: 500;
-    border: 1px solid rgba(201, 168, 76, 0.15);
-    transition: all 0.3s;
+    color: var(--gray);
 }
 
-.hero-tag:hover {
-    background: rgba(201, 168, 76, 0.2);
-    transform: translateY(-2px);
+.download-size {
+    font-size: 14px;
+    color: var(--gray);
 }
 
-/* ============================================================
-   RESPONSIVE - HERO TAGS
-============================================================ */
-@media (max-width: 768px) {
-    .hero-tags {
-        justify-content: center;
-    }
+.download-changelog {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+}
+
+.download-changelog h4 {
+    font-size: 14px;
+    color: var(--gold);
+    margin-bottom: 8px;
+}
+
+.download-changelog ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.download-changelog ul li {
+    font-size: 14px;
+    color: var(--gray);
+    padding: 5px 0;
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.5;
+}
+
+.download-changelog ul li::before {
+    content: '✅';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+}
+
+.download-changelog ul li strong {
+    color: var(--white);
+}
+
+.btn-download {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    background: var(--gold);
+    color: var(--black);
+    padding: 16px 40px;
+    border-radius: 16px;
+    font-weight: 700;
+    font-size: 18px;
+    text-decoration: none;
+    transition: var(--transition);
+    width: 100%;
+    justify-content: center;
+}
+
+.btn-download:hover {
+    background: var(--gold-light);
+    transform: translateY(-3px);
+    box-shadow: 0 20px 40px rgba(201, 168, 76, 0.3);
+}
+
+.btn-download small {
+    display: block;
+    font-size: 12px;
+    font-weight: 400;
+    opacity: 0.7;
+}
+
+.btn-download.stable-download {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--white);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-download.stable-download:hover {
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 20px 40px rgba(255, 255, 255, 0.05);
+}
+
+.coming-soon {
+    color: var(--gray);
+    font-size: 14px;
+    padding: 12px 24px;
+    border: 2px dashed rgba(201, 168, 76, 0.3);
+    border-radius: 12px;
+    margin-top: 20px;
 }
 
 /* ============================================================
@@ -594,7 +794,7 @@ body {
     padding: 20px 24px;
     cursor: pointer;
     font-weight: 600;
-    transition: 0.3s;
+    transition: var(--transition);
 }
 
 .faq-question:hover {
@@ -604,7 +804,7 @@ body {
 .faq-toggle {
     font-size: 24px;
     color: var(--gold);
-    transition: 0.3s;
+    transition: var(--transition);
 }
 
 .faq-item.active .faq-toggle {
@@ -614,7 +814,7 @@ body {
 .faq-answer {
     max-height: 0;
     overflow: hidden;
-    transition: 0.3s;
+    transition: var(--transition);
     padding: 0 24px;
     color: var(--gray);
 }
@@ -661,7 +861,7 @@ body {
     border-radius: 8px;
     color: var(--white);
     font-family: 'Inter', sans-serif;
-    transition: 0.3s;
+    transition: var(--transition);
 }
 
 .form-group input:focus,
@@ -671,63 +871,35 @@ body {
 }
 
 /* ============================================================
-   DOWNLOAD
+   BACK TO TOP
 ============================================================ */
-.download {
-    padding: 80px 0;
-    background: var(--black);
-    text-align: center;
-}
-
-.download-content h2 {
-    font-size: 36px;
-    margin-bottom: 12px;
-}
-
-.download-content p {
-    color: var(--gray);
-    margin-bottom: 30px;
-}
-
-.download-buttons {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-}
-
-.btn-download {
-    display: inline-flex;
-    align-items: center;
-    gap: 16px;
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
     background: var(--gold);
     color: var(--black);
-    padding: 16px 40px;
-    border-radius: 16px;
-    font-weight: 700;
-    font-size: 20px;
-    text-decoration: none;
-    transition: all 0.3s;
+    border: none;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition);
+    box-shadow: 0 4px 15px rgba(201, 168, 76, 0.3);
+    z-index: 999;
 }
 
-.btn-download:hover {
+.back-to-top.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.back-to-top:hover {
     transform: translateY(-3px);
-    box-shadow: 0 20px 40px rgba(201, 168, 76, 0.3);
-}
-
-.btn-download small {
-    display: block;
-    font-size: 12px;
-    font-weight: 400;
-    opacity: 0.7;
-}
-
-.coming-soon {
-    color: var(--gray);
-    font-size: 14px;
-    padding: 12px 24px;
-    border: 2px dashed rgba(201, 168, 76, 0.3);
-    border-radius: 12px;
+    background: var(--gold-light);
 }
 
 /* ============================================================
@@ -773,7 +945,7 @@ body {
     color: var(--gray);
     text-decoration: none;
     font-size: 14px;
-    transition: 0.3s;
+    transition: var(--transition);
 }
 
 .footer-links a:hover {
@@ -789,11 +961,12 @@ body {
 .footer-social a {
     color: var(--gray);
     text-decoration: none;
-    transition: 0.3s;
+    transition: var(--transition);
 }
 
 .footer-social a:hover {
     color: var(--gold);
+    transform: translateY(-3px);
 }
 
 .footer-bottom {
@@ -801,6 +974,226 @@ body {
     padding-top: 20px;
     font-size: 12px;
     color: var(--gray);
+}
+
+/* ============================================================
+   RATING PAGE
+============================================================ */
+.rating-page {
+    padding: 120px 0 60px;
+    min-height: 100vh;
+    background: var(--dark-bg);
+}
+
+.rating-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.rating-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.rating-header h1 {
+    font-size: 40px;
+    font-weight: 800;
+    margin-bottom: 12px;
+}
+
+.rating-header h1 .highlight {
+    color: var(--gold);
+}
+
+.rating-header p {
+    color: var(--gray);
+    font-size: 16px;
+}
+
+.rating-average {
+    background: var(--black-light);
+    border-radius: 16px;
+    padding: 30px;
+    text-align: center;
+    border: 1px solid rgba(201, 168, 76, 0.05);
+    margin-bottom: 30px;
+}
+
+.rating-average .big-star {
+    font-size: 48px;
+    line-height: 1;
+}
+
+.rating-average .big-number {
+    font-size: 48px;
+    font-weight: 800;
+    color: var(--gold);
+}
+
+.rating-average .big-total {
+    font-size: 20px;
+    color: var(--gray);
+}
+
+.rating-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 6px;
+}
+
+.rating-bar-row .star-label {
+    width: 40px;
+    font-size: 14px;
+    color: var(--gray);
+}
+
+.rating-bar-row .bar-track {
+    flex: 1;
+    height: 6px;
+    background: var(--black);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.rating-bar-row .bar-fill {
+    height: 100%;
+    background: var(--gold);
+    border-radius: 4px;
+    transition: width 0.8s ease;
+}
+
+.rating-bar-row .bar-count {
+    width: 30px;
+    font-size: 12px;
+    color: var(--gray);
+    text-align: right;
+}
+
+.review-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 40px;
+}
+
+.review-card {
+    background: var(--black-light);
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: var(--transition);
+}
+
+.review-card:hover {
+    border-color: rgba(201, 168, 76, 0.15);
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.review-name {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.review-stars {
+    color: var(--gold);
+    font-size: 16px;
+    letter-spacing: 2px;
+}
+
+.review-date {
+    font-size: 12px;
+    color: var(--gray);
+}
+
+.review-text {
+    color: var(--gray);
+    font-size: 14px;
+    margin-top: 4px;
+}
+
+.review-form {
+    background: var(--black-light);
+    border-radius: 16px;
+    padding: 30px;
+    border: 1px solid rgba(201, 168, 76, 0.05);
+}
+
+.review-form h3 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.star-rating {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.star-rating .star {
+    font-size: 32px;
+    cursor: pointer;
+    color: var(--gray);
+    transition: var(--transition);
+    user-select: none;
+}
+
+.star-rating .star.active {
+    color: var(--gold);
+}
+
+.star-rating .star:hover {
+    transform: scale(1.2);
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 14px;
+    background: var(--gold);
+    color: var(--black);
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-submit:hover {
+    background: var(--gold-light);
+    transform: translateY(-2px);
+}
+
+.success-message {
+    display: none;
+    text-align: center;
+    padding: 30px;
+    background: rgba(46, 204, 113, 0.1);
+    border: 1px solid rgba(46, 204, 113, 0.3);
+    border-radius: 12px;
+    margin-top: 20px;
+}
+
+.success-message .check {
+    font-size: 48px;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.success-message h4 {
+    font-size: 20px;
+    color: #2ECC71;
 }
 
 /* ============================================================
@@ -849,6 +1242,22 @@ body {
     .footer-social {
         justify-content: center;
     }
+
+    .floating-badge {
+        display: none;
+    }
+
+    .rating-header h1 {
+        font-size: 28px;
+    }
+
+    .rating-average .big-number {
+        font-size: 32px;
+    }
+
+    .star-rating .star {
+        font-size: 28px;
+    }
 }
 
 @media (max-width: 768px) {
@@ -885,7 +1294,52 @@ body {
         grid-template-columns: 1fr;
     }
 
-    .floating-badge {
-        display: none;
+    .download-card {
+        padding: 20px;
+    }
+
+    .download-version {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+
+    .version-name {
+        font-size: 18px;
+    }
+
+    .download-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+
+    .download-changelog ul li {
+        font-size: 13px;
+        padding-left: 20px;
+    }
+
+    .btn-download {
+        font-size: 16px;
+        padding: 14px 20px;
+    }
+
+    .rating-header h1 {
+        font-size: 28px;
+    }
+
+    .rating-bar-row .star-label {
+        width: 30px;
+        font-size: 12px;
+    }
+
+    .rating-bar-row .bar-count {
+        width: 20px;
+        font-size: 10px;
+    }
+
+    .review-header {
+        flex-wrap: wrap;
+        gap: 4px;
     }
 }

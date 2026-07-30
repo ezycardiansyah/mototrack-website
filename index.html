@@ -6,6 +6,20 @@
     <title>MotoTrack - Track Your Journey</title>
     <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+    <!-- ===== META TAGS ===== -->
+<meta name="description" content="Aplikasi touring dan tracking perjalanan motor dengan navigasi cerdas, pencatatan rute otomatis, dan analisis perjalanan lengkap.">
+<meta name="keywords" content="MotoTrack, tracking motor, navigasi motor, touring, aplikasi motor, GPS tracker">
+<meta name="author" content="KyokoRu">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="MotoTrack - Track Your Journey">
+<meta property="og:description" content="Aplikasi touring dan tracking perjalanan motor dengan navigasi cerdas.">
+<meta property="og:image" content="assets/images/og-image.jpg">
+
+<!-- Favicon -->
+<link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
     <!-- ===== NAVBAR ===== -->
@@ -70,48 +84,67 @@
     </div>
 </section>
 
-    <!-- ===== FITUR ===== -->
-    <section class="features" id="features">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">Fitur Unggulan</span>
-                <h2>Semua yang Kamu Butuhkan untuk Perjalanan</h2>
-                <p>MotoTrack hadir dengan fitur lengkap untuk pengendara motor modern.</p>
-            </div>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">🗺️</div>
-                    <h3>Navigasi</h3>
-                    <p>Membuat rute yang kalian cari</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🏍️</div>
-                    <h3>Trip Recorder</h3>
-                    <p>Catat setiap perjalanan dengan jarak, durasi, dan kecepatan akurat.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🌤️</div>
-                    <h3>Info Cuaca</h3>
-                    <p>Dapatkan perkiraan cuaca real-time di sepanjang rute perjalanan.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3>Analisis & Export</h3>
-                    <p>Lihat statistik perjalanan dan ekspor data ke CSV atau GPX.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🔔</div>
-                    <h3>Pengingat Istirahat</h3>
-                    <p>Fitur keselamatan untuk perjalanan jarak jauh.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📤</div>
-                    <h3>Share & Export</h3>
-                    <p>Bagikan hasil perjalanan ke teman atau ekspor untuk analisis.</p>
-                </div>
-            </div>
+<!-- ===== LOADING SCREEN ===== -->
+<div id="loading">
+    <div class="loading-spinner"></div>
+    <div class="loading-text">🏍️ MotoTrack</div>
+</div>
+
+<!-- ===== FITUR ===== -->
+<section class="features" id="features">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">Fitur Unggulan</span>
+            <h2>Semua yang Kamu Butuhkan untuk Perjalanan</h2>
+            <p>MotoTrack hadir dengan fitur lengkap untuk pengendara motor modern.</p>
         </div>
-    </section>
+        <div class="features-grid">
+
+            <!-- 1. Navigasi -->
+            <div class="feature-card">
+                <div class="feature-icon">🗺️</div>
+                <h3>Navigasi & Tracking</h3>
+                <p>Cari rute, navigasi real-time, dan lacak perjalanan dengan peta interaktif.</p>
+            </div>
+
+            <!-- 2. Trip Recorder -->
+            <div class="feature-card">
+                <div class="feature-icon">🏍️</div>
+                <h3>Trip Recorder</h3>
+                <p>Catat setiap perjalanan dengan jarak, durasi, dan kecepatan akurat.</p>
+            </div>
+
+            <!-- 3. View Detail History ⬅️ BARU -->
+            <div class="feature-card">
+                <div class="feature-icon">📍</div>
+                <h3>View Detail History</h3>
+                <p>Lihat rute perjalanan dengan line tracking lengkap seperti Strava.</p>
+            </div>
+
+            <!-- 4. Info Cuaca -->
+            <div class="feature-card">
+                <div class="feature-icon">🌤️</div>
+                <h3>Info Cuaca Real-time</h3>
+                <p>Dapatkan perkiraan cuaca di sepanjang rute perjalanan.</p>
+            </div>
+
+            <!-- 5. Analisis & Export -->
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Analisis & Export</h3>
+                <p>Lihat statistik perjalanan dan ekspor data ke CSV atau GPX.</p>
+            </div>
+
+            <!-- 6. UI/UX Sporty ⬅️ BARU -->
+            <div class="feature-card">
+                <div class="feature-icon">🎨</div>
+                <h3>UI/UX Sporty</h3>
+                <p>Tampilan baru yang modern dengan kontrol Start, Pause, Stop yang lebih intuitif.</p>
+            </div>
+
+        </div>
+    </div>
+</section>
 
 <!-- ===== SCREENSHOTS ===== -->
 <section class="screenshots" id="screenshots">
@@ -224,24 +257,27 @@
         </div>
     </section>
 
-    <!-- ===== DOWNLOAD ===== -->
-    <section class="download" id="download">
-        <div class="container">
-            <div class="download-content">
-                <h2>📥 Download MotoTrack</h2>
-                <p>Mulai lacak perjalananmu sekarang! Download APK langsung di sini.</p>
-                <div class="download-buttons">
-                    <a href="assets/apk/MotoTrack-v1.0.0.apk" class="btn-download" download>
-                        <span>📱</span> Download APK
-                        <small>v1.0.0 • 15 MB</small>
-                    </a>
-                    <div class="coming-soon">
-                        <span>🚀</span> Coming Soon to Play Store
-                    </div>
+<!-- ===== DOWNLOAD ===== -->
+<section class="download" id="download">
+    <div class="container">
+        <div class="download-content">
+            <h2>📥 Download MotoTrack</h2>
+            <p>Kunjungi halaman download untuk mendapatkan versi terbaru.</p>
+            <div class="download-buttons">
+                <a href="download.html" class="btn-download">
+                    <span>📱</span> Kunjungi Halaman Download
+                    <small>v1.5.0 Tersedia!</small>
+                </a>
+                <div class="coming-soon">
+                    <span>🚀</span> Coming Soon to Play Store
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
+
+<!-- ===== BACK TO TOP ===== -->
+<button id="backToTop" class="back-to-top" aria-label="Kembali ke atas">⬆</button>
 
     <!-- ===== FOOTER ===== -->
     <footer class="footer">
@@ -265,7 +301,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>© 2026 MotoTrack. Made with ❤️ by KyokoRu</p>
+                <p>© 2026 MotoTrack. Made with ❤️ by Ezy Cardiansyah Fizri</p>
                 <p>Not affiliated with Google or Apple.</p>
             </div>
         </div>
